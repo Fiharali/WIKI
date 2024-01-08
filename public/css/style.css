@@ -1,0 +1,33 @@
+.source {
+    margin-inline:auto ;
+    overflow: hidden;
+    display: flex;
+    white-space: nowrap;
+    cursor: pointer;
+    
+  }
+  @keyframes slide {
+    from {
+        transform: translateX(0%);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+    
+  }
+  .source-slider{
+    padding-right: 1100px;
+    display:flex;
+    animation: 15s slide infinite linear;
+  }
+  
+  .source-slider img{
+    margin: 0 40px;
+    /* width: 20%;  */
+    padding: 10px;
+    transition: 0.3s;
+    border-radius: 10px; 
+  }
+  .source:hover .source-slider{
+    animation-play-state: paused;
+  }

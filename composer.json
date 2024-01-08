@@ -1,0 +1,17 @@
+{
+    "name": "youcode/biblio",
+    "autoload": {
+        "psr-4": {
+            "app\\": "app"
+        }
+    },
+    "authors": [
+        {
+            "name": "fihar abdelali",
+            "email": "fiharali0@gmail.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.6"
+    }
+}
