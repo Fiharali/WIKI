@@ -5,6 +5,7 @@ namespace app\model;
 include __DIR__ . '/../../vendor/autoload.php';
 
 use app\connection\Connection;
+
 use PDO;
 
 class User
@@ -12,20 +13,19 @@ class User
 
     private $db;
     private $id;
-    private $firstname;
-    private $lastname;
+    private $name;
+    private $role_id;
     private $email;
     private $password;
-    private $phone;
     private $profile;
 
-    public function getFirstname()
+    public function getRoleId()
     {
-        return $this->firstname;
+        return $this->role_id;
     }
-    public function getLastname()
+    public function getName()
     {
-        return $this->lastname;
+        return $this->name;
     }
     public function getEmail()
     {
@@ -35,45 +35,81 @@ class User
     {
         return $this->password;
     }
-    public function getPhone()
-    {
-        return $this->phone;
-    }
     public function getProfile()
     {
         return $this->profile;
     }
 
-    public function __construct($id, $firstname, $lastname, $email, $password, $phone, $profile)
+    public function setRoleId($role_id)
+    {
+         $this->role_id=$role_id;
+    }
+    public function setName($name)
+    {
+         $this->name=$name;
+    }
+    public function setEmail($email)
+    {
+         $this->email=$email;
+    }
+    public function setPassword($password)
+    {
+         $this->password=$password;
+    }
+    public function setProfile($profile)
+    {
+         $this->profile=$profile;
+    }
+
+    public function __construct($id=null, $name=null, $email=null, $password=null, $role_id=null, $profile=null)
     {
         $this->db = Connection::getInstence()->getConnect();
         $this->id = $id;
-        $this->firstname = $firstname;
-        $this->lastname = $lastname;
+        $this->name = $name;
         $this->email = $email;
         $this->password = $password;
-        $this->phone = $phone;
+        $this->role_id = $role_id;
         $this->profile = $profile;
     }
-  
 
-    
 
- 
+    public function createUser()
+    {
 
- 
-   
+        $query = "INSERT INTO `users` (name, email, password,profile,role_id) VALUES (?, ?, ?, ?, ? )";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute([$this->name, $this->email, $this->password, $this->profile, $this->role_id]);
+    }
+
+    public function getUsers()
+    {
+        $query = "SELECT users.*, roles.name as rolename FROM users  inner JOIN roles ON users.role_id = roles.id";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
+        return  $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public function updateUsers()
+    {
+        $query = "update users set name = ? , email=?, role_id=? , profile=? where id = ? ";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute([$this->name, $this->email, $this->role_id, $this->profile, $this->id]);
+
+    }
+
+    public function UsersByGmail()
+    {
+        $query = "select * from users where email = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute([$this->email]);
+        return  $stmt->fetch(PDO::FETCH_OBJ);
+
+    }
 
     public function delete()
     {
 
         $stmt = $this->db->prepare("delete from users  where id = ? ");
         $stmt->execute([$this->id]);
-
     }
-
-   
-
-
 }
-

@@ -1,8 +1,11 @@
-RewriteEngine On
+<IfModule mod_rewrite.c>
+    RewriteEngine On
 
-# Exclude existing files and directories from rewrite
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
+    # Exclude specific directories from the rewrite
+    RewriteRule ^(?:Public/(?:js|css|imgs)/) - [L]
 
-# Rewrite all other requests to app/routes/App.php?url=<request>
-RewriteRule ^(.*)$ /wiki2/app/routes/app.php?url=$1 [QSA,L]
+    # Rewrite all other requests to app/routes/RouteHandler.php?url=<request>
+    # RewriteCond %{REQUEST_FILENAME} !-f
+    # RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ app/routes/app.php?url=$1 [QSA,L]
+</IfModule>
