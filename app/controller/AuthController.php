@@ -21,72 +21,85 @@ session_start();
 class AuthController
 {
 
-
-
-    public function Register($name, $email, $password, $confirm_password)
+    public function loginPage()
     {
-        // return  $this->check($email);
-        // session_start();
+        include_once '../../views/auth/login.php';
+    }
+    public function registerPage()
+    {
+        include_once '../../views/auth/register.php';
+    }
 
-        // if (empty($name)) {
-        //     $_SESSION['name'] = "Name is required";
-        // } elseif (strlen($name) < 3) {
-        //     $_SESSION['name'] = "Name must be at least 3 characters";
-        // } else {
-        //     $_SESSION['name'] = "";
-        // }
-        // if (empty($email)) {
-        //     $_SESSION['email'] = "email is required";
-        // } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        //     $_SESSION['email'] = "email must be valid";
-        // } else {
-        //     $_SESSION['email'] = "";
-        // }
+    public function register()
+    {
 
-        // if (empty($password)) {
-        //     $_SESSION['password'] = "password is required";
-        // } elseif (strlen($password) < 7) {
-        //     $_SESSION['password'] = "password  must be >= 8";
-        // } else {
-        //     $_SESSION['password'] = "";
-        // }
-        // if ($password != $confirm_password) {
-        //     $_SESSION['confirm_password'] = "password doesn't match";
-        // } else {
-        //     $_SESSION['confirm_password'] = "";
-        // }
-        // $checkUser = new User(null, $email, null);
-        // $check = $checkUser->CheckUser();
-        // if (count($check)  > 0) {
-        //     $_SESSION['email'] = "email exist ";
-        // }
+        extract($_POST);
+
+        if (empty($name)) {
+            $_SESSION['name'] = "Name is required";
+        } elseif (strlen($name) < 3) {
+            $_SESSION['name'] = "Name must be at least 3 characters";
+        } else {
+            $_SESSION['name'] = "";
+        }
+
+        if (empty($email)) {
+            $_SESSION['email'] = "email is required";
+        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $_SESSION['email'] = "email must be valid";
+        } else {
+            $_SESSION['email'] = "";
+        }
+
+        if (empty($password)) {
+            $_SESSION['password'] = "password is required";
+        } elseif (strlen($password) < 7) {
+            $_SESSION['password'] = "password  must be >= 8";
+        } else {
+            $_SESSION['password'] = "";
+        }
+
+        if ($password != $confirm_password) {
+            $_SESSION['confirm_password'] = "password doesn't match";
+        } else {
+            $_SESSION['confirm_password'] = "";
+        }
+
+        $checkUser = new User();
+        $checkUser->setEmail($email);
+        $check = $checkUser->UserByGmail();
+        if ($check) {
+            $_SESSION['email'] = "email exist ";
+        }
 
 
-        // if (empty($_SESSION['name']) &&  empty($_SESSION['email']) && empty($_SESSION['password']) && empty($_SESSION['confirm_password'])) {
+        if (empty($_SESSION['name']) &&  empty($_SESSION['email']) && empty($_SESSION['password']) && empty($_SESSION['confirm_password'])) {
             $password = password_hash($password, PASSWORD_DEFAULT);
             $user = new User();
             $user->setName($name);
             $user->setEmail($email);
             $user->setPassword($password);
-            if ($user->UsersByGmail()) {
-                $user->createUser();
-            }
+            $user->setRoleId(2);
+            $lastInsertId = $user->createUser();
+            $_SESSION['username'] = $name;
+            $_SESSION['isAdmin'] = false;
+            $_SESSION['id'] = $lastInsertId;
+            echo 'registered';
+        }
 
-            // $lastInsertId=$checkUser->createUser();
-            // $_SESSION['username'] = $name;
-            // $_SESSION['isAdmin'] = false;
-            // $_SESSION['id'] = $lastInsertId;
-            // header("location:../../views/client/home/index.php");
-            // exit();
-        // } else {
-        //     header("location:../../views/auth/register.php");
-        //     exit();
-        // }
+
+
+        // echo $_SESSION['username'] . $_SESSION['isAdmin'] . $_SESSION['id'];
+
+        header('location:register');
     }
 
 
-    public function login($email, $password)
+    public function login()
     {
+
+        extract($_POST);
+
 
         if (empty($email)) {
             $_SESSION['email'] = "email is required";
@@ -100,19 +113,44 @@ class AuthController
             $_SESSION['password'] = "";
         }
 
+        // $checkUser = new User();
+        // $checkUser->setEmail($email);
+        // $checkUser->setPassword($password);
+        // $check = $checkUser->UserByGmail();
+        // // var_dump($check);
+        // // if (!$check) {
+        // //     $_SESSION['email'] = " this email  not exist ";
+        // //     header('location:login');
+        // // }
 
-        $checkUser = new User();
-        $checkUser->setEmail($email);
-        $checkUser->setPassword($password);
-        if ($checkUser->UsersByGmail()) {
 
+        if (empty($_SESSION['email']) &&  empty($_SESSION['password'])) {
+            $checkUser = new User();
+            $checkUser->setEmail($email);
+            $checkUser->setPassword($password);
+            $check = $checkUser->UserByGmail();
+            if ($check) {
+                if (password_verify($password, $check->password)) {
+                    $_SESSION['username'] = $check->name;
+                    $_SESSION['id'] = $check->id;
+                    if ($check->rolename == "admin") {
+                        $_SESSION['isAdmin'] = true;
+                        echo 'admin';
+                    } else {
+                        $_SESSION['isAdmin'] = false;
+                        echo ' not admin';
+                    }
+                } else {
+                    $_SESSION['password'] = "password is incorrect";
+                    header('location:login');
+                }
+            } else {
+                $_SESSION['email'] = " this email  not exist ";
+                header('location:login');
+            }
+        } else {
+            header('location:login');
         }
-
-        // if (empty($_SESSION['email']) &&  empty($_SESSION['password'])) {
-        //     // $checkUser = new User(null, $email, $password);
-        //     // $check = $checkUser->CheckUser();
-        //     if (count($check)  > 0) {
-        //         $user = $check[0];
         //         if (password_verify($password, $user["password"])) {
         //             // header("location:../../views/produit/index.php");
         //             //    var_dump( $user["name"]);
@@ -145,7 +183,8 @@ class AuthController
         return   $allUsers->getUsers();
     }
 
-    public function update(){
+    public function update()
+    {
 
         // $id=$_POST['id'];
         // $name=$_POST['name'];
@@ -161,29 +200,23 @@ class AuthController
         // } else {
         //     $_SESSION['error_name'] = "";
         // }
-        $category= new user($id,$name);
+        $category = new user();
         // $row = $category->getCategoryById($id);
         // if($row){
-            // $category->updateCategory();
+        // $category->updateCategory();
         // }
         header('location:../category');
-        
     }
 
-//     <?php
-// session_start();
-// $_SESSION[ 'username' ] = '';
-// $_SESSION[ 'id' ] = '';
-// $_SESSION[ 'isAdmin' ] = '';
-// unset($_SESSION['username']);
-// unset($_SESSION['id']);
-// unset($_SESSION['isAdmin']);
-// session_destroy();
-// header('Location:../../views/auth/login.php');
-// ?
+    //     <?php
+    // session_start();
+    // $_SESSION[ 'username' ] = '';
+    // $_SESSION[ 'id' ] = '';
+    // $_SESSION[ 'isAdmin' ] = '';
+    // unset($_SESSION['username']);
+    // unset($_SESSION['id']);
+    // unset($_SESSION['isAdmin']);
+    // session_destroy();
+    // header('Location:../../views/auth/login.php');
+    // ?
 }
-
-
-
-
-

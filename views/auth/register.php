@@ -5,15 +5,15 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 
-if (isset($_SESSION["username"])) {
-    if (isset($_SERVER['HTTP_REFERER'])) {
-		header("Location: " . $_SERVER['HTTP_REFERER']);
-		exit();
-	} else {
-        header("location:../client");
-		exit();
-	}
-} 
+// if (isset($_SESSION["username"])) {
+//     if (isset($_SERVER['HTTP_REFERER'])) {
+// 		header("Location: " . $_SERVER['HTTP_REFERER']);
+// 		exit();
+// 	} else {
+//         header("location:../client");
+// 		exit();
+// 	}
+// } 
 
 ?>
 <!DOCTYPE html>
@@ -119,7 +119,7 @@ if (isset($_SESSION["username"])) {
 
     <div class="login-page">
         <div class="form">
-            <form method="post" action="../../app/controller/user.php " class="register-form">
+            <form method="post" action="register" class="register-form">
                 <input type="text" placeholder="name" name="name" />
                 <span><?= isset($_SESSION['name']) ? $_SESSION['name']  : '' ; $_SESSION['name'] = ''; ?></span>
                 <input type=" email" placeholder="email address" name="email" />
@@ -129,7 +129,7 @@ if (isset($_SESSION["username"])) {
                 <input type="password" placeholder="confirm password" name="confirm_password" />
                 <span><?= isset($_SESSION['confirm_password']) ? $_SESSION['confirm_password']  : '' ; $_SESSION['confirm_password'] = ''; ?></span>
                 <button name="register" type="submit">Register</button>
-                <p class="message">Already registered? <a href="login.php">Sign In</a></p>
+                <p class="message">Already registered? <a href="login">Sign In</a></p>
             </form>
 
         </div>

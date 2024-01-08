@@ -10,27 +10,29 @@ session_start();
 
 class CategoryController {
 
-    public function addCategory(){
-
-        require_once '../../views/admin/addCategory.php';
+    public function category()
+    {
+        $cat = new Category();
+        $cats = $cat->getCategories();
+        require_once '../../views/admin/category.php';
     }
     public function add(){
 
-        $name=$_POST['name'];
+        $name=$_POST['categoryName'];
 
-        if (empty($name)) {
-            $_SESSION['error_name'] = "Name category is required";
-        } elseif (strlen($name) < 3) {
-            $_SESSION['error_name'] = "Name must be at least 3 characters";
-        } else {
-            $_SESSION['error_name'] = "";
-        }
-        if(empty($_SESSION['error_name'])){
+        // if (empty($name)) {
+        //     $_SESSION['error_name'] = "Name category is required";
+        // } elseif (strlen($name) < 3) {
+        //     $_SESSION['error_name'] = "Name must be at least 3 characters";
+        // } else {
+        //     $_SESSION['error_name'] = "";
+        // }
+        // if(empty($_SESSION['error_name'])){
             $category = new Category();
             $category->setName($name);
             $category->createCategory();
-        }
-        header('location:../category');
+        // }
+        header('location:category');
     }
     public function getAll(){
         $category= new Category();
@@ -63,7 +65,7 @@ class CategoryController {
         $id=$_GET["id"];
         $category = new Category($id);
         $category->deleteCategory();
-        header('location:../category');
+        header('location:category');
 
     }
 

@@ -69,6 +69,6 @@ class Category
 
     public function deleteCategory(){
         $stmt = $this->db->prepare("DELETE from categories where id=?");
-        $stmt->execute($this->id);
+        $stmt->execute([$this->id]);
     }
 }

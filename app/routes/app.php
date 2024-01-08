@@ -13,15 +13,27 @@ $router = new Router();
 $router->setRoutes([
     'GET' => [
         '' => ['AuthController', 'test'],
-        'login/ali' => ['AuthController', 'login'],
-        'register/ali' => ['AuthController', 'register'],
-        'user/client/landing' => ['AuthController', 'test_test'],
-        'user/client/detail/annonce' => ['AuthController', 'test_test_test'],
+
+        'login' => ['AuthController', 'loginPage'],
+        'register' => ['AuthController', 'registerPage'],
+
+        'tag' => ['TagController', 'tag'],
+        'delete-tag' => ['TagController', 'delete'],
+
+        'category' => ['CategoryController', 'category'],
+        'delete-category' => ['CategoryController', 'delete'],
+
 
 
     ],
     'POST' => [
-        'submit' => ['AuthController', 'save'],
+        'register' => ['AuthController', 'register'],
+        'login' => ['AuthController', 'login'],
+
+        'tag' => ['TagController', 'add'],
+
+        'category' => ['CategoryController', 'add'],
+
 
 
 

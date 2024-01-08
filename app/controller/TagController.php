@@ -12,25 +12,27 @@ session_start();
 class TagController
 {
 
-    public function addTag()
+    public function tag()
     {
-
-        require_once '../../views/admin/addTag.php';
+        $tag = new Tag();
+        $tags = $tag->getTags();
+        require_once '../../views/admin/tags.php';
     }
     public function add()
     {
 
-        $name = $_POST['name'];
+        $name = $_POST['tagName'];
         $tag = new Tag();
         $tag->setName($name);
         $tag->createTag();
-        header('location:../Tag');
+        header('location:tag');
     }
     public function getAll()
     {
         $tag = new Tag();
-        $categories = $tag->getTags();
-        require_once '../../views/admin/Tag.php';
+        $tags = $tag->getTags();
+        require_once '../../views/admin/tags.php';
+
     }
 
     public function update()
@@ -59,7 +61,7 @@ class TagController
         $id = $_GET["id"];
         $tag = new Tag($id);
         $tag->deleteTag();
-        header('location:../Tag');
+        header('location:tag');
     }
 
     public function getTag()

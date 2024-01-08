@@ -63,12 +63,12 @@ class Tag
 
     public function updateTag(){
 
-        $stmt = $this->db->prepare("UPDATE tags  set  name = ?  where id= ?");
+        $stmt = $this->db->prepare("    UPDATE tags  set  name = ?  where id= ?");
         $stmt->execute([$this->id,$this->name]);
     }
 
     public function deleteTag(){
         $stmt = $this->db->prepare("DELETE from tags where id=?");
-        $stmt->execute($this->id);
+        $stmt->execute([$this->id]);
     }
 }

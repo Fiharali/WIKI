@@ -5,15 +5,15 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 
-if (isset($_SESSION["username"])) {
-    if (isset($_SERVER['HTTP_REFERER'])) {
-		header("Location: " . $_SERVER['HTTP_REFERER']);
-		exit();
-	} else {
-        header("location:../client");
-		exit();
-	}
-} 
+// if (isset($_SESSION["username"])) {
+//     if (isset($_SERVER['HTTP_REFERER'])) {
+// 		header("Location: " . $_SERVER['HTTP_REFERER']);
+// 		exit();
+// 	} else {
+//         header("location:../client");
+// 		exit();
+// 	}
+// } 
 
 ?>
 <!DOCTYPE html>
@@ -120,7 +120,7 @@ if (isset($_SESSION["username"])) {
     <div class="login-page">
         <div class="form">
 
-            <form method="post" action="../../app/controller/user.php" class="login-form">
+            <form method="post" action="login" class="login-form">
                 <input type="email" placeholder="email address" name="email" />
                 <span><?= isset($_SESSION['email']) ? $_SESSION['email']  : '';
                         $_SESSION['email'] = ''; ?></span>
@@ -128,7 +128,7 @@ if (isset($_SESSION["username"])) {
                 <span><?= isset($_SESSION['password']) ? $_SESSION['password']  : '';
                         $_SESSION['password'] = ''; ?></span>
                 <button name="login" type="submit">login</button>
-                <p class="message">Not registered? <a href="register.php">Create an account</a></p>
+                <p class="message">Not registered? <a href="register">Create an account</a></p>
             </form>
         </div>
     </div>

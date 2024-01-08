@@ -42,26 +42,26 @@ class User
 
     public function setRoleId($role_id)
     {
-         $this->role_id=$role_id;
+        $this->role_id = $role_id;
     }
     public function setName($name)
     {
-         $this->name=$name;
+        $this->name = $name;
     }
     public function setEmail($email)
     {
-         $this->email=$email;
+        $this->email = $email;
     }
     public function setPassword($password)
     {
-         $this->password=$password;
+        $this->password = $password;
     }
     public function setProfile($profile)
     {
-         $this->profile=$profile;
+        $this->profile = $profile;
     }
 
-    public function __construct($id=null, $name=null, $email=null, $password=null, $role_id=null, $profile=null)
+    public function __construct($id = null, $name = null, $email = null, $password = null, $role_id = null, $profile = null)
     {
         $this->db = Connection::getInstence()->getConnect();
         $this->id = $id;
@@ -79,6 +79,10 @@ class User
         $query = "INSERT INTO `users` (name, email, password,profile,role_id) VALUES (?, ?, ?, ?, ? )";
         $stmt = $this->db->prepare($query);
         $stmt->execute([$this->name, $this->email, $this->password, $this->profile, $this->role_id]);
+
+        // Get the last insert ID
+        $lastInsertId = $this->db->lastInsertId();
+        return $lastInsertId;
     }
 
     public function getUsers()
@@ -94,16 +98,14 @@ class User
         $query = "update users set name = ? , email=?, role_id=? , profile=? where id = ? ";
         $stmt = $this->db->prepare($query);
         $stmt->execute([$this->name, $this->email, $this->role_id, $this->profile, $this->id]);
-
     }
 
-    public function UsersByGmail()
+    public function UserByGmail()
     {
-        $query = "select * from users where email = ?";
+        $query = "select users.* , roles.name as 'rolename' from users INNER JOIN roles on users.role_id= roles.id  where email = ?";
         $stmt = $this->db->prepare($query);
         $stmt->execute([$this->email]);
         return  $stmt->fetch(PDO::FETCH_OBJ);
-
     }
 
     public function delete()

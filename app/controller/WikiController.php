@@ -12,6 +12,12 @@ session_start();
 class WikiController
 {
 
+    // public function test()
+    // {
+    //     include_once '../../views/admin/index.php';
+    // }
+
+
     public function addWiki()
     {
 
