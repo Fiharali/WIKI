@@ -64,7 +64,7 @@ class Category
     public function updateCategory(){
 
         $stmt = $this->db->prepare("UPDATE categories  set  name = ?  where id= ?");
-        $stmt->execute([$this->id,$this->name]);
+        $stmt->execute([$this->name,$this->id]);
     }
 
     public function deleteCategory(){

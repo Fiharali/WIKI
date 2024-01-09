@@ -19,9 +19,12 @@ $router->setRoutes([
 
         'tag' => ['TagController', 'tag'],
         'delete-tag' => ['TagController', 'delete'],
+        'edit-tag' => ['TagController', 'getTag'],
 
         'category' => ['CategoryController', 'category'],
         'delete-category' => ['CategoryController', 'delete'],
+        'edit-category' => ['CategoryController', 'getCategory'],
+
 
 
 
@@ -31,8 +34,11 @@ $router->setRoutes([
         'login' => ['AuthController', 'login'],
 
         'tag' => ['TagController', 'add'],
+        'update-tag' => ['TagController', 'update'],
 
         'category' => ['CategoryController', 'add'],
+        'update-category' => ['CategoryController', 'update'],
+
 
 
 
