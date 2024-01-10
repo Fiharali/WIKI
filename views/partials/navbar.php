@@ -33,6 +33,17 @@
             color: white;
         }
 
+        .custom-textarea {
+            /* Add your custom styles here */
+            /* For example: */
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: black; /* Set the background color to black */
+            color: white; /* Set text color to white for better visibility */
+        }
+
     </style>
 
 
