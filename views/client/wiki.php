@@ -20,8 +20,8 @@ require_once __DIR__ . '/../partials/navbar.php';
         <div class="flex mt-10 ">
                 <img class="w-1/4 basis-1/4 rounded-full"  src="/wiki2/public/img/profile.jpg">
                 <span class="basis-2/3 ms-2">
-                    <h2 class="text-2xl"><?= $wiki->username ?> </h2>
-                    <a href='#'>VIEW PROFILE</a>
+                    <h2 class="text-2xl mt-3"><?= $wiki->username ?> </h2>
+                    <!-- <a href='#'>VIEW PROFILE</a> -->
                 </span>
             </div>
         </div>
