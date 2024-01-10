@@ -88,8 +88,8 @@ class WikiController
     {
         $id = $_GET['id'];
         $wiki = new Wiki($id);
-        $cat = $wiki->getWikiById();
-        require_once '../../views/admin/TagEdit.php';
+        $wiki = $wiki->getWikiById();
+        require_once '../../views/client/wiki.php';
     }
 
     public function archivedWiki()

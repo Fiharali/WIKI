@@ -86,13 +86,15 @@ class AuthController
             $_SESSION['isAdmin'] = false;
             $_SESSION['id'] = $lastInsertId;
             header('location:../wiki2');
+        }else{
+
+
+            header('location:register');
         }
 
 
 
         // echo $_SESSION['username'] . $_SESSION['isAdmin'] . $_SESSION['id'];
-
-        header('location:register');
     }
 
 

@@ -36,6 +36,7 @@ $router->setRoutes([
 
         'archived-wiki' => ['WikiController', 'archivedWiki'],
         'restore-wiki' => ['WikiController', 'restoredWiki'],
+        'details-wiki' => ['WikiController', 'getWiki'],
 
         
 
