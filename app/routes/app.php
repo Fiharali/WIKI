@@ -12,7 +12,7 @@ $router = new Router();
 // Définir les routes associées aux méthodes HTTP GET et POST
 $router->setRoutes([
     'GET' => [
-        '' => ['AuthController', 'test'],
+        '' => ['WikiController', 'home'],
 
         'login' => ['AuthController', 'loginPage'],
         'register' => ['AuthController', 'registerPage'],
@@ -25,6 +25,18 @@ $router->setRoutes([
         'delete-category' => ['CategoryController', 'delete'],
         'edit-category' => ['CategoryController', 'getCategory'],
 
+        'users' => ['AuthController', 'allUsers'],
+        'delete-user' => ['AuthController', 'delete'],
+        'edit-user' => ['AuthController', 'getUser'],
+
+
+        'wiki' => ['WikiController', 'getAll'],
+        'archive-wiki' => ['WikiController', 'archiveWiki'],
+
+        'archived-wiki' => ['WikiController', 'archivedWiki'],
+        'restore-wiki' => ['WikiController', 'restoredWiki'],
+
+        
 
 
 
@@ -38,6 +50,9 @@ $router->setRoutes([
 
         'category' => ['CategoryController', 'add'],
         'update-category' => ['CategoryController', 'update'],
+
+        'users' => ['AuthController', 'add'],
+        'update-user' => ['AuthController', 'update'],
 
 
 

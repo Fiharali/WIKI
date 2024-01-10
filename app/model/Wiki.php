@@ -22,6 +22,7 @@ class Wiki
     private $photo;
     private $category_id;
     private $writer;
+   
 
     public function __construct($id=null, $title=null, $content=null, $status=null, $photo=null,$category_id=null,$writer=null)
     {
@@ -93,7 +94,14 @@ class Wiki
 
     public function getWikis()
     {
-        $stmt = $this->db->prepare("SELECT * from  wikis");
+        $stmt = $this->db->prepare("select wikis.*,users.name as 'writer',categories.name as 'category' from wikis INNER JOIN users on wikis.writer = users.id INNER JOIN categories on wikis.category_id= categories.id where wikis.status = 'approve'");
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+        return $result;
+    }
+    public function getWikisArchived()
+    {
+        $stmt = $this->db->prepare("select wikis.*,users.name as 'writer',categories.name as 'category' from wikis INNER JOIN users on wikis.writer = users.id INNER JOIN categories on wikis.category_id= categories.id where wikis.status = 'pending'");
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_OBJ);
         return $result;
@@ -109,5 +117,15 @@ class Wiki
     public function deleteWiki(){
         $stmt = $this->db->prepare("DELETE from wikis where id=?");
         $stmt->execute($this->id);
+    }
+
+    public function archive(){
+        $stmt = $this->db->prepare("update wikis set status ='pending' where id =?");
+        $stmt->execute([$this->id]);
+    }
+
+    public function restore(){
+        $stmt = $this->db->prepare("update wikis set status ='approve' where id =?");
+        $stmt->execute([$this->id]);
     }
 }

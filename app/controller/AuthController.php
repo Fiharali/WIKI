@@ -21,13 +21,14 @@ session_start();
 class AuthController
 {
 
-    public function loginPage()
-    {
-        include_once '../../views/auth/login.php';
-    }
+    
     public function registerPage()
     {
         include_once '../../views/auth/register.php';
+    }
+    public function loginPage()
+    {
+        include_once '../../views/auth/login.php';
     }
 
     public function register()
@@ -113,15 +114,7 @@ class AuthController
             $_SESSION['password'] = "";
         }
 
-        // $checkUser = new User();
-        // $checkUser->setEmail($email);
-        // $checkUser->setPassword($password);
-        // $check = $checkUser->UserByGmail();
-        // // var_dump($check);
-        // // if (!$check) {
-        // //     $_SESSION['email'] = " this email  not exist ";
-        // //     header('location:login');
-        // // }
+
 
 
         if (empty($_SESSION['email']) &&  empty($_SESSION['password'])) {
@@ -151,61 +144,73 @@ class AuthController
         } else {
             header('location:login');
         }
-        //         if (password_verify($password, $user["password"])) {
-        //             // header("location:../../views/produit/index.php");
-        //             //    var_dump( $user["name"]);
-        //             $_SESSION['username'] = $user["firstName"];
-        //             $_SESSION['id'] = $user["id"];
-        //             if ($user["name"] == "admin") {
-        //                 $_SESSION['isAdmin'] = true;
-        //                 header("location:../../views/admin/books/index.php");
-        //             } else {
-        //                 $_SESSION['isAdmin'] = false;
-        //                 header("location:../../views/client/home/index.php");
-        //             }
-        //         } else {
-        //             $_SESSION['password'] = "password is incorrect";
-        //             header("location:../../views/auth/login.php");
-        //         }
-        //     } else {
-        //         $_SESSION['email'] = "email  doesn't exist ";
-        //         header("location:../../views/auth/login.php");
-        //     }
-        // } else {
-        //     header("location:../../views/auth/login.php");
-        //     exit();
-        // }
     }
 
     public function AllUsers()
     {
         $allUsers = new User();
-        return   $allUsers->getUsers();
+        $users = $allUsers->getUsers();
+        require_once '../../views/admin/users.php';
+    }
+
+    public function delete()
+    {
+        $id = $_GET["id"];
+        $user = new User($id);
+        $user->delete();
+        header('location:users');
+    }
+
+    public function getUser()
+    {
+        $id = $_GET["id"];
+        $user = new User($id);
+        $user = $user->UserById();
+        require_once '../../views/admin/userEdit.php';
     }
 
     public function update()
     {
 
-        // $id=$_POST['id'];
-        // $name=$_POST['name'];
-        // $name=$_POST['name'];
-        // $name=$_POST['name'];
-        // $name=$_POST['name'];
-        // $name=$_POST['name'];
+        $id = htmlspecialchars(trim($_POST['id']));
+        $name = htmlspecialchars(trim($_POST['name']));
+        $email = htmlspecialchars(trim($_POST['email']));
+        $role = htmlspecialchars(trim($_POST['role']));
 
-        // if (empty($name)) {
-        //     $_SESSION['error_name'] = "Name category is required";
-        // } elseif (strlen($name) < 3) {
-        //     $_SESSION['error_name'] = "Name must be at least 3 characters";
-        // } else {
-        //     $_SESSION['error_name'] = "";
-        // }
-        $category = new user();
-        // $row = $category->getCategoryById($id);
-        // if($row){
-        // $category->updateCategory();
-        // }
-        header('location:../category');
+
+
+
+
+        if (empty($name)) {
+            $_SESSION['error_name'] = "Name  is required";
+        } elseif (strlen($name) < 3) {
+            $_SESSION['error_name'] = "Name must be at least 3 characters";
+        } else {
+            $_SESSION['error_name'] = "";
+        }
+
+        if (empty($email)) {
+            $_SESSION['error_email'] = "email is required";
+        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $_SESSION['error_email'] = "email must be valid";
+        } else {
+            $_SESSION['error_email'] = "";
+        }
+
+        if (empty($role)) {
+            $_SESSION['error_role'] = "role  is required";
+        }
+
+
+        if (empty($_SESSION['error_name']) &&  empty($_SESSION['error_email']) && empty($_SESSION['error_role'])) {
+
+            $user = new User($id, $name, $email, null, $role);
+            $user->updateUsers();
+            header('location:users');
+
+        } else {
+            header("location:edit-user?id=$id");
+        }
     }
 
     //     <?php

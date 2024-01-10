@@ -17,7 +17,7 @@ class User
     private $role_id;
     private $email;
     private $password;
-    private $profile;
+   
 
     public function getRoleId()
     {
@@ -35,10 +35,7 @@ class User
     {
         return $this->password;
     }
-    public function getProfile()
-    {
-        return $this->profile;
-    }
+   
 
     public function setRoleId($role_id)
     {
@@ -56,12 +53,9 @@ class User
     {
         $this->password = $password;
     }
-    public function setProfile($profile)
-    {
-        $this->profile = $profile;
-    }
+   
 
-    public function __construct($id = null, $name = null, $email = null, $password = null, $role_id = null, $profile = null)
+    public function __construct($id = null, $name = null, $email = null, $password = null, $role_id = null)
     {
         $this->db = Connection::getInstence()->getConnect();
         $this->id = $id;
@@ -69,16 +63,16 @@ class User
         $this->email = $email;
         $this->password = $password;
         $this->role_id = $role_id;
-        $this->profile = $profile;
+       
     }
 
 
     public function createUser()
     {
 
-        $query = "INSERT INTO `users` (name, email, password,profile,role_id) VALUES (?, ?, ?, ?, ? )";
+        $query = "INSERT INTO `users` (name, email, password,role_id) VALUES (?, ?, ?, ? )";
         $stmt = $this->db->prepare($query);
-        $stmt->execute([$this->name, $this->email, $this->password, $this->profile, $this->role_id]);
+        $stmt->execute([$this->name, $this->email, $this->password, $this->role_id]);
 
         // Get the last insert ID
         $lastInsertId = $this->db->lastInsertId();
@@ -95,9 +89,9 @@ class User
 
     public function updateUsers()
     {
-        $query = "update users set name = ? , email=?, role_id=? , profile=? where id = ? ";
+        $query = "update users set name = ? , email=?, role_id=? where id = ? ";
         $stmt = $this->db->prepare($query);
-        $stmt->execute([$this->name, $this->email, $this->role_id, $this->profile, $this->id]);
+        $stmt->execute([$this->name, $this->email, $this->role_id, $this->id]);
     }
 
     public function UserByGmail()
@@ -105,6 +99,14 @@ class User
         $query = "select users.* , roles.name as 'rolename' from users INNER JOIN roles on users.role_id= roles.id  where email = ?";
         $stmt = $this->db->prepare($query);
         $stmt->execute([$this->email]);
+        return  $stmt->fetch(PDO::FETCH_OBJ);
+    }
+
+    public function UserById()
+    {
+        $query = "select users.* , roles.name as 'rolename' from users INNER JOIN roles on users.role_id= roles.id  where users.id = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute([$this->id]);
         return  $stmt->fetch(PDO::FETCH_OBJ);
     }
 
