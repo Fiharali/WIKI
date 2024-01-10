@@ -85,7 +85,7 @@ class AuthController
             $_SESSION['username'] = $name;
             $_SESSION['isAdmin'] = false;
             $_SESSION['id'] = $lastInsertId;
-            echo 'registered';
+            header('location:../wiki2');
         }
 
 
@@ -128,10 +128,10 @@ class AuthController
                     $_SESSION['id'] = $check->id;
                     if ($check->rolename == "admin") {
                         $_SESSION['isAdmin'] = true;
-                        echo 'admin';
+                        header('location:tag');
                     } else {
                         $_SESSION['isAdmin'] = false;
-                        echo ' not admin';
+                        header('location:../wiki2');
                     }
                 } else {
                     $_SESSION['password'] = "password is incorrect";
@@ -213,15 +213,12 @@ class AuthController
         }
     }
 
-    //     <?php
-    // session_start();
-    // $_SESSION[ 'username' ] = '';
-    // $_SESSION[ 'id' ] = '';
-    // $_SESSION[ 'isAdmin' ] = '';
-    // unset($_SESSION['username']);
-    // unset($_SESSION['id']);
-    // unset($_SESSION['isAdmin']);
-    // session_destroy();
-    // header('Location:../../views/auth/login.php');
-    // ?
+    public function logout(){
+    session_destroy();
+    header('location:../wiki2');
+
+
+    }
+
+    
 }

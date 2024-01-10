@@ -28,6 +28,7 @@ $router->setRoutes([
         'users' => ['AuthController', 'allUsers'],
         'delete-user' => ['AuthController', 'delete'],
         'edit-user' => ['AuthController', 'getUser'],
+        'logout' => ['AuthController', 'logout'],
 
 
         'wiki' => ['WikiController', 'getAll'],
@@ -53,6 +54,9 @@ $router->setRoutes([
 
         'users' => ['AuthController', 'add'],
         'update-user' => ['AuthController', 'update'],
+
+        'add-wiki' => ['WikiController', 'add'],
+
 
 
 
