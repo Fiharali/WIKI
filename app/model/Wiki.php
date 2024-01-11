@@ -118,7 +118,7 @@ class Wiki
     }
 
     public function getWikiById(){
-        $stmt = $this->db->prepare("SELECT wikis.*,users.name as 'username' , categories.name, GROUP_CONCAT(tags.name) AS tagNames FROM wikis INNER JOIN categories ON wikis.category_id = categories.id LEFT JOIN wiki_tags ON wikis.id = wiki_tags.wiki_id LEFT JOIN tags ON wiki_tags.tag_id = tags.id INNER JOIN users on users.id = wikis.writer  WHERE wikis.id = ? GROUP BY wikis.id");
+        $stmt = $this->db->prepare("SELECT wikis.*,users.name as 'username' , categories.name ,categories.id as 'category', GROUP_CONCAT(tags.name) AS tagNames FROM wikis INNER JOIN categories ON wikis.category_id = categories.id LEFT JOIN wiki_tags ON wikis.id = wiki_tags.wiki_id LEFT JOIN tags ON wiki_tags.tag_id = tags.id INNER JOIN users on users.id = wikis.writer  WHERE wikis.id = ? GROUP BY wikis.id");
         $stmt->execute([$this->id]);
         $row = $stmt->fetch(PDO::FETCH_OBJ);
         return $row;

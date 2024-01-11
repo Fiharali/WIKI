@@ -64,16 +64,33 @@ class WikiController
     public function update()
     {
 
+        try {
         $id = $_POST['id'];
         $title = $_POST['title'];
         $content = $_POST['content'];
-        $status = $_POST['status'];
-        $photo = $_POST['photo'];
-        $category_id = $_POST['category_id'];
-        $writer = $_POST['writer'];
-        $tag = new Wiki($id, $title, $content, $status, $photo, $category_id, $writer);
+        $status = 'approve';
+        $category_id = $_POST['category'];
+        $writer = $_SESSION['id'];
 
-        $tag->createWiki();
+        $file_name = $_FILES['photo']['name'];
+        $file_temp = $_FILES['photo']['tmp_name'];
+        $upload_image = "../../public/img/" . $file_name;
+        move_uploaded_file($file_temp, $upload_image);
+        $wiki = new Wiki($id, $title, $content, $status, $file_name, $category_id, $writer);
+        $wiki->updateWiki();
+
+
+        foreach ($_POST['tags'] as  $tag) {
+            $wiki->setWikiId($id);
+            $wiki->setTagId($tag);
+            $wiki->addWikiTags();
+        }
+
+        header("location:../wiki2");
+        } catch (\Throwable $th) {
+            echo "error all champs are require ";
+        }
+        
     }
 
     public function delete()
@@ -88,6 +105,10 @@ class WikiController
     {
         $id = $_GET['id'];
         $wiki = new Wiki($id);
+        $category = new Category();
+        $categories = $category->getCategories();
+        $tag = new Tag();
+        $tags = $tag->getTags();
         $wiki = $wiki->getWikiById();
         require_once '../../views/client/wiki.php';
     }

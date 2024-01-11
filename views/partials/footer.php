@@ -137,7 +137,6 @@
    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
    <script src="https://cdn.tiny.cloud/1/pyqzpt16nrnuegda7mz8q6bcf0d3dfbgwq0o65o519vvwi5w/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
-   <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
    <script src="/wiki2/public/js/main.js"></script>
    <!-- <script>
@@ -180,6 +179,8 @@ inputSearch.addEventListener('keyup', async function() {
     }
 });
    </script> -->
+   <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
+
    </body>
 
    </html>

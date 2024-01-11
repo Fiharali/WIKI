@@ -38,7 +38,6 @@ $router->setRoutes([
         'restore-wiki' => ['WikiController', 'restoredWiki'],
         'details-wiki' => ['WikiController', 'getWiki'],
         'delete-wiki' => ['WikiController', 'delete'],
-        'edit-wiki' => ['WikiController', 'getWiki'],
 
         'search' => ['WikiController', 'searchWiki'],
 
@@ -61,6 +60,8 @@ $router->setRoutes([
         'update-user' => ['AuthController', 'update'],
 
         'add-wiki' => ['WikiController', 'add'],
+        'update-wiki' => ['WikiController', 'update'],
+
 
 
 
