@@ -8,6 +8,7 @@ include __DIR__ . '/../../vendor/autoload.php';
 use  app\model\Wiki;
 use  app\model\Category;
 use  app\model\Tag;
+use  app\model\User;
 
 session_start();
 
@@ -165,5 +166,20 @@ class WikiController
         // header('Content-Type: application/json');
         echo $wikis;
         // var_dump(json_encode($wikis));
+    }
+
+    public function statistics()
+    {
+        $wiki = new Wiki();
+        $totalWikis = $wiki->totalWikis();
+
+        $category = new Category();
+        $totalCategories = $category->totalCategories();
+
+        $user = new User();
+        $totalUsers = $user->totalUsers();
+        // echo "Total Wikis: " . $totalWikis;
+     
+        include_once '../../views/admin/index.php';
     }
 }

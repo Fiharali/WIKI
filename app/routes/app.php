@@ -41,6 +41,8 @@ $router->setRoutes([
 
         'search' => ['WikiController', 'searchWiki'],
 
+        'admin' => ['WikiController', 'statistics'],
+
         
 
 

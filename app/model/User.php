@@ -116,4 +116,12 @@ class User
         $stmt = $this->db->prepare("delete from users  where id = ? ");
         $stmt->execute([$this->id]);
     }
+
+    public function totalUsers()
+    {
+        $stmt = $this->db->prepare("SELECT COUNT(*) AS totalUsers FROM users");
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_OBJ);
+        return $result->totalUsers;
+    }
 }

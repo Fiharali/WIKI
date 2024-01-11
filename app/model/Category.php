@@ -71,4 +71,12 @@ class Category
         $stmt = $this->db->prepare("DELETE from categories where id=?");
         $stmt->execute([$this->id]);
     }
+
+    public function totalCategories()
+    {
+        $stmt = $this->db->prepare("SELECT COUNT(*) AS totalCategories FROM categories");
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_OBJ);
+        return $result->totalCategories;
+    }
 }

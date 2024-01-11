@@ -176,5 +176,16 @@ class Wiki
         $result = $stmt->fetchAll(PDO::FETCH_OBJ);
         return $result;
     }
+
+    public function totalWikis()
+    {
+        $stmt = $this->db->prepare("SELECT COUNT(*) AS totalWikis FROM wikis");
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_OBJ);
+        return $result->totalWikis;
+    }
+    
+
+    
     
 }
