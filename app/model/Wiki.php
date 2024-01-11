@@ -170,11 +170,10 @@ class Wiki
     }
 
 
-    public function search(){
-        $stmt = $this->db->prepare("SELECT wikis.*, users.name as 'writer', tags.name as 'tags', categories.name as 'category' FROM wikis INNER JOIN users ON wikis.writer = users.id INNER JOIN categories ON wikis.category_id = categories.id INNER JOIN wiki_tags ON wiki_tags.wiki_id = wikis.id INNER JOIN tags ON tags.id = wiki_tags.tag_id WHERE wikis.status = 'approve' AND ? LIKE ? ORDER BY id DESC");
-        $result = $stmt->execute([$this->title, "%$this->content%"]);
-        
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    public function search($select){
+        $stmt = $this->db->prepare("SELECT wikis.*, users.name as 'writer', tags.name as 'tags', categories.name as 'category' FROM wikis INNER JOIN users ON wikis.writer = users.id INNER JOIN categories ON wikis.category_id = categories.id INNER JOIN wiki_tags ON wiki_tags.wiki_id = wikis.id INNER JOIN tags ON tags.id = wiki_tags.tag_id WHERE wikis.status = 'approve' AND $select LIKE ?  GROUP BY wikis.id ORDER BY id DESC");
+        $result = $stmt->execute([ "%$this->content%"]);
+        $result = $stmt->fetchAll(PDO::FETCH_OBJ);
         return $result;
     }
     

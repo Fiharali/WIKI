@@ -139,22 +139,25 @@
    <script src="https://cdn.tiny.cloud/1/pyqzpt16nrnuegda7mz8q6bcf0d3dfbgwq0o65o519vvwi5w/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
    <script src="/wiki2/public/js/main.js"></script>
-   <!-- <script>
-   const inputSearch = document.getElementById("input-search");
-const selectSearch = document.getElementById("select-search");
-const cards = document.getElementById("cards");
+   <script>
+       const inputSearch = document.getElementById("input-search");
+       const selectSearch = document.getElementById("select-search");
+       const cards = document.getElementById("cards");
 
-inputSearch.addEventListener('keyup', async function() {
-    cards.innerHTML = '';
+       inputSearch.addEventListener('keyup', async function() {
+          
 
-    const response = await fetch('search?select=' + selectSearch.value + '&input=' + inputSearch.value);
-    
-    if (response.ok) {
-        const data = await response.json();
-        console.log(data);
+           const response = await fetch('search?select=' + selectSearch.value + '&input=' + inputSearch.value);
 
-        data.forEach(wiki => {
-            const wikiHTML = `
+           if (response.ok) {
+               const data = await response.json();
+               console.log(data);
+
+               if (data.length > 0) {
+                   // If there is data, iterate through it and display results
+                   cards.innerHTML = '';    
+                   data.forEach(wiki => {
+                       const wikiHTML = `
                 <div class="bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                     <a href="details-wiki?id=${wiki.id}">
                         <img class="rounded-t-lg" src="/wiki2/public/img/${wiki.photo}" alt="image" />
@@ -173,12 +176,20 @@ inputSearch.addEventListener('keyup', async function() {
                 </div>
             `;
 
-            // Append the generated HTML string to the results container
-            cards.innerHTML += wikiHTML;
-        });
-    }
-});
-   </script> -->
+                       // Append the generated HTML string to the results container
+                       cards.innerHTML += wikiHTML;
+                   });
+               } else {
+                   // If there is no data, display a message or take appropriate action
+                   cards.innerHTML = '<p>No results found.</p>';
+               }
+           } else {
+               // Handle the case when the response is not OK (e.g., show an error message)
+               console.error('Error fetching data:', response.statusText);
+           }
+
+       });
+   </script>
    <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
 
    </body>

@@ -158,12 +158,12 @@ class WikiController
         // echo $_GET["select"].'   '.$_GET["input"];
 
         $wiki = new Wiki();
-        $wiki->setTitle($_GET["select"]);
+        // $wiki->setTitle($_GET["select"]);
         $wiki->setContent($_GET["input"]);
-        $wikis = json_encode($wiki->search());
+        $wikis = json_encode($wiki->search($_GET["select"]));
         // echo $wikis;
-        header('Content-Type: application/json');
-        echo json_encode($wikis);
+        // header('Content-Type: application/json');
+        echo $wikis;
         // var_dump(json_encode($wikis));
     }
 }
