@@ -51,7 +51,7 @@ class WikiController
 
             header('location:../wiki2');
         } catch (\Throwable $th) {
-            echo "error";
+            echo "error all champs are require ";
         }
     }
     public function getAll()
@@ -81,7 +81,7 @@ class WikiController
         $id = $_GET["id"];
         $wiki = new Wiki($id);
         $wiki->deleteWiki();
-        header('location:../Tag');
+        header('location:../wiki2');
     }
 
     public function getWiki()
@@ -125,10 +125,24 @@ class WikiController
         $tags = $tag->getTags();
         $wiki = new Wiki();
         $wikis = $wiki->getWikis();
-        if (isset($_SESSION['id'])) { 
+        if (isset($_SESSION['id'])) {
             $wiki->setId($_SESSION['id']);
-            $userWikis = $wiki->getUserWikis(); 
+            $userWikis = $wiki->getUserWikis();
         }
         include_once '../../views/client/index.php';
+    }
+
+    public function searchWiki()
+    {
+        // echo $_GET["select"].'   '.$_GET["input"];
+
+        $wiki = new Wiki();
+        $wiki->setTitle($_GET["select"]);
+        $wiki->setContent($_GET["input"]);
+        $wikis = json_encode($wiki->search());
+        // echo $wikis;
+        header('Content-Type: application/json');
+        echo json_encode($wikis);
+        // var_dump(json_encode($wikis));
     }
 }

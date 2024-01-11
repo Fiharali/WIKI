@@ -77,13 +77,13 @@ class Wiki
         $this->title = $title;
     }
     public function setContent($content){
-        $this->title = $content;
+        $this->content = $content;
     }
     public function setStatus($status){
-        $this->title = $status;
+        $this->status = $status;
     }
     public function setPhoto($photo){
-        $this->title = $photo;
+        $this->photo = $photo;
     }
     public function setCategoryId($category_id){
         $this->category_id = $category_id;
@@ -134,7 +134,7 @@ class Wiki
 
     public function getUserWikis()
     {
-        $stmt = $this->db->prepare("select wikis.*,users.id,users.name as 'writer',categories.name as 'category' from wikis INNER JOIN users on wikis.writer = users.id INNER JOIN categories on wikis.category_id= categories.id where wikis.status = 'approve' and users.id= ?");
+        $stmt = $this->db->prepare("select wikis.* ,users.name as 'writer',categories.name as 'category' from wikis INNER JOIN users on wikis.writer = users.id INNER JOIN categories on wikis.category_id= categories.id where wikis.status = 'approve' and users.id= ?");
         $stmt->execute([$this->id]);
         $result = $stmt->fetchAll(PDO::FETCH_OBJ);
         return $result;
@@ -156,7 +156,7 @@ class Wiki
 
     public function deleteWiki(){
         $stmt = $this->db->prepare("DELETE from wikis where id=?");
-        $stmt->execute($this->id);
+        $stmt->execute([$this->id]);
     }
 
     public function archive(){
@@ -168,4 +168,14 @@ class Wiki
         $stmt = $this->db->prepare("update wikis set status ='approve' where id =?");
         $stmt->execute([$this->id]);
     }
+
+
+    public function search(){
+        $stmt = $this->db->prepare("SELECT wikis.*, users.name as 'writer', tags.name as 'tags', categories.name as 'category' FROM wikis INNER JOIN users ON wikis.writer = users.id INNER JOIN categories ON wikis.category_id = categories.id INNER JOIN wiki_tags ON wiki_tags.wiki_id = wikis.id INNER JOIN tags ON tags.id = wiki_tags.tag_id WHERE wikis.status = 'approve' AND ? LIKE ? ORDER BY id DESC");
+        $result = $stmt->execute([$this->title, "%$this->content%"]);
+        
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+    
 }

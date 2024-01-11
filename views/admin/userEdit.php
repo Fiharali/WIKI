@@ -24,6 +24,6 @@ require_once __DIR__ . '/../partials/navbarAdmin.php';
     <?php
     require_once __DIR__ . '/../partials/footerAdmin.php';
 
-    $_POST["name"]
+    
 
     ?>

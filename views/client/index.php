@@ -89,22 +89,33 @@ require_once __DIR__ . '/../partials/navbar.php';
     <!-- End block -->
     <!-- Start block -->
     <section class="bg-gray-50 dark:bg-gray-800">
+
+    
         <h1 class="text-slate-50 text-center text-5xl pt-3 font-bold">
             The latest Wikis
         </h1>
+        <div class="flex px-10 md:mx-20 lg:mx-36 mt-10 gap-10">
+    <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" name="category" id="select-search">
+    <option value="wikis.title">Title</option>
+    <option value="tags.name">Tag</option>
+    <option value="categories.name">Category</option>
+    </select>
+    <input type="text" name="input-search" id="input-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full  dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Search what you want here ">
+
+    </div>
         <div class="max-w-screen-xl px-4 py-8 mx-auto space-y-12 lg:space-y-20 lg:py-24 lg:px-6">
             <!-- Row -->
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mt-5">
-                <?php foreach ($wikis as $wiki) {?>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mt-5 " id="cards">
+                <?php foreach ($wikis as $wiki) { ?>
                     <div class=" bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                        <a href="details-wiki?id=<?=$wiki->id?>">
-                            <img class="rounded-t-lg" src="/wiki2/public/img/<?=$wiki->photo?>" alt="image" />
+                        <a href="details-wiki?id=<?= $wiki->id ?>">
+                            <img class="rounded-t-lg" src="/wiki2/public/img/<?= $wiki->photo ?>" alt="image" />
                         </a>
                         <div class="p-5">
-                            <a href="details-wiki?id=<?=$wiki->id?>">
-                                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"><?=$wiki->title?></h5>
+                            <a href="details-wiki?id=<?= $wiki->id ?>">
+                                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"><?= $wiki->title ?></h5>
                             </a>
-                            <a href="details-wiki?id=<?=$wiki->id?>" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            <a href="details-wiki?id=<?= $wiki->id ?>" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                 Read more
                                 <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
@@ -112,7 +123,7 @@ require_once __DIR__ . '/../partials/navbar.php';
                             </a>
                         </div>
                     </div>
-                <?php }?>
+                <?php } ?>
             </div>
 
         </div>
@@ -121,7 +132,7 @@ require_once __DIR__ . '/../partials/navbar.php';
     <section class="bg-white dark:bg-gray-900">
 
         <div class=" px-6  mx-auto  lg:px-6 py-6">
-            <?php if (isset($_SESSION['id'])) {?>
+            <?php if (isset($_SESSION['id'])) { ?>
                 <h1 class="text-slate-50 text-center text-5xl pt-3 font-bold">
             Your wikis
         </h1>
@@ -130,16 +141,16 @@ require_once __DIR__ . '/../partials/navbar.php';
                     Add new wiki
                 </button>
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mt-5">
-                    <?php foreach ($userWikis as $wiki) {?>
+                    <?php foreach ($userWikis as $wiki) { ?>
                         <div class=" bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                        <a href="details-wiki?id=<?=$wiki->id?>">
-                            <img class="rounded-t-lg" src="/wiki2/public/img/<?=$wiki->photo?>" alt="image" />
+                        <a href="details-wiki?id=<?= $wiki->id ?>">
+                            <img class="rounded-t-lg" src="/wiki2/public/img/<?= $wiki->photo ?>" alt="image" />
                         </a>
                         <div class="p-5">
-                            <a href="details-wiki?id=<?=$wiki->id?>">
-                                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"><?=$wiki->title?></h5>
+                            <a href="details-wiki?id=<?= $wiki->id ?>">
+                                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"><?= $wiki->title ?></h5>
                             </a>
-                            <a href="details-wiki?id=<?=$wiki->id?>" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            <a href="details-wiki?id=<?= $wiki->id ?>" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                 Read more
                                 <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
@@ -147,9 +158,9 @@ require_once __DIR__ . '/../partials/navbar.php';
                             </a>
                         </div>
                     </div>
-                    <?php }?>
+                    <?php } ?>
                 </div>
-            <?php }?>
+            <?php } ?>
 
 
         </div>
@@ -186,18 +197,18 @@ require_once __DIR__ . '/../partials/navbar.php';
                                     <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
                                     <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" name="category">
                                         <option value="">Choose Category</option>
-                                        <?php foreach ($categories as $category) {?>
-                                            <option value="<?=$category->id?> "><?=$category->name?></option>
-                                        <?php }?>
+                                        <?php foreach ($categories as $category) { ?>
+                                            <option value="<?= $category->id ?> "><?= $category->name ?></option>
+                                        <?php } ?>
                                     </select>
                                 </div>
                                 <div class="col-span-2">
                                     <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
                                     <select class=" select2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 " name="tags[]" multiple >
                                         <option value="">Choose Tgs</option>
-                                        <?php foreach ($tags as $tag) {?>
-                                            <option value="<?=$tag->id?> "><?=$tag->name?></option>
-                                        <?php }?>
+                                        <?php foreach ($tags as $tag) { ?>
+                                            <option value="<?= $tag->id ?> "><?= $tag->name ?></option>
+                                        <?php } ?>
                                     </select>
                                 </div>
 
@@ -330,6 +341,6 @@ require_once __DIR__ . '/../partials/navbar.php';
         </div>
     </section>
     <?php
-require_once __DIR__ . '/../partials/footer.php';
+        require_once __DIR__ . '/../partials/footer.php';
 
-?>
+    ?>
