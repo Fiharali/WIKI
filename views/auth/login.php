@@ -5,15 +5,15 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 
-// if (isset($_SESSION["username"])) {
-//     if (isset($_SERVER['HTTP_REFERER'])) {
-// 		header("Location: " . $_SERVER['HTTP_REFERER']);
-// 		exit();
-// 	} else {
-//         header("location:../client");
-// 		exit();
-// 	}
-// } 
+if (isset($_SESSION["id"])) {
+    if (isset($_SERVER['HTTP_REFERER'])) {
+		header("Location: " . $_SERVER['HTTP_REFERER']);
+		exit();
+	} else {
+        header("location:../wiki2");
+		exit();
+	}
+} 
 
 ?>
 <!DOCTYPE html>

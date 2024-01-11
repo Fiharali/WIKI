@@ -130,7 +130,7 @@ class AuthController
                     $_SESSION['id'] = $check->id;
                     if ($check->rolename == "admin") {
                         $_SESSION['isAdmin'] = true;
-                        header('location:tag');
+                        header('location:../wiki2');
                     } else {
                         $_SESSION['isAdmin'] = false;
                         header('location:../wiki2');
