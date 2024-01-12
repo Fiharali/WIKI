@@ -133,7 +133,7 @@
            </div>
        </div>
    </footer>
-   <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
+   <!-- <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script> -->
    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
    <script src="https://cdn.tiny.cloud/1/pyqzpt16nrnuegda7mz8q6bcf0d3dfbgwq0o65o519vvwi5w/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
@@ -143,6 +143,7 @@
        const inputSearch = document.getElementById("input-search");
        const selectSearch = document.getElementById("select-search");
        const cards = document.getElementById("cards");
+     
 
        inputSearch.addEventListener('keyup', async function() {
           
@@ -151,7 +152,7 @@
 
            if (response.ok) {
                const data = await response.json();
-               console.log(data);
+            //    console.log(data);
 
                if (data.length > 0) {
                    // If there is data, iterate through it and display results
