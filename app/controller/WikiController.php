@@ -78,6 +78,7 @@ class WikiController
         $upload_image = "../../public/img/" . $file_name;
         move_uploaded_file($file_temp, $upload_image);
         $wiki = new Wiki($id, $title, $content, $status, $file_name, $category_id, $writer);
+        $wiki->deleteWikiTags();
         $wiki->updateWiki();
 
 

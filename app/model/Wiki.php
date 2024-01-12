@@ -185,6 +185,11 @@ class Wiki
         return $result->totalWikis;
     }
     
+    public function deleteWikiTags()
+    {
+        $stmt = $this->db->prepare("delete from wiki_tags where wiki_id = ?");
+        $stmt->execute([$this->id]);
+    }
 
     
     
