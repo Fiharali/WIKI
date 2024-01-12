@@ -236,7 +236,7 @@ require_once __DIR__ . '/../partials/navbar.php';
             <div class="basis-1/2">
                 <?php foreach ($tags as $tag) { ?>
 
-                    <kbd class="px-2 py-1.5 my-10 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">#<?= $tag->name ?></kbd>
+                    <kbd class="px-2 py-1.5 mb-20 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">#<?= $tag->name ?></kbd>
                 <?php } ?>
             </div>
             <div class="basis-1/2">
