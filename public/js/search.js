@@ -10,7 +10,7 @@ inputSearch.addEventListener('keyup', async function() {
 
     if (response.ok) {
         const data = await response.json();
-     //    console.log(data);
+        // console.log(data);
 
         if (data.length > 0) {
             // If there is data, iterate through it and display results
